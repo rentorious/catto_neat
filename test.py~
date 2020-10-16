@@ -1,0 +1,38 @@
+import pygame
+import os
+from pygame.locals import *
+
+cact = pygame.image.load(os.path.join("imgs", "cactus.png"))
+c_rect = cact.get_rect()
+
+def draw(win, sprite):
+    win.fill([222,222,222])
+    win.blit(sprite, sprite.get_rect())
+
+    pygame.display.update()
+
+clock = pygame.time.Clock()
+win = pygame.display.set_mode((600, 600))
+
+run = True
+
+while run:
+    clock.tick(30)
+
+    move = (0, 0)
+    
+    for event in pygame.event.get():
+        if event.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                run = False
+            elif event.key == K_a:
+                move = (-5, 0)
+            elif event.key == K_w:
+                move = (0, -5)
+            elif event.key == K_d:
+                move = (5, 0)
+            elif event.key == K_s:
+                move = (0, 5)
+
+    cact.get_rect().move_ip(move)
+    draw(win, cact)
