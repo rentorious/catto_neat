@@ -2,16 +2,17 @@ import pygame
 from assets import NEKO_TILESET
 from constants import *
 
+
 class Neko:
     NEKO_W = 64
     NEKO_H = 64
 
     SPRITE_LEN = 5
     ANIMATION_LEN = 5 * SPRITE_LEN
-    
+
     def __init__(self):
         self.x = 100
-        self.y = GROUND 
+        self.y = GROUND
 
         self.jumping = False
         self.jump_time = 0
@@ -20,13 +21,13 @@ class Neko:
         self.animation_time = 0
 
         self.NEKOS = [
-        NEKO_TILESET.subsurface((i * self.NEKO_W, 64), (self.NEKO_W, self.NEKO_H)) for i in range(3)]
+            NEKO_TILESET.subsurface((i * self.NEKO_W, 64), (self.NEKO_W, self.NEKO_H)) for i in range(3)]
         self.img = self.NEKOS[0]
 
     def jump(self):
         if self.jumping:
             return
-        
+
         self.jumping = True
         self.jump_time = 0
         self.jump_vel = -10.5
@@ -34,14 +35,14 @@ class Neko:
     def update(self):
         self.move()
         self.animate()
-        
+
     def move(self):
         self.jump_time += 1
 
-        #displacement
-        d = self.jump_vel*self.jump_time + 1.5*self.jump_time**2
+        # displacement
+        d = self.jump_vel*self.jump_time + 1.32*self.jump_time**2
 
-        #clamp
+        # clamp
         if d >= 16:
             d = 16
         if d < 0:
@@ -66,6 +67,7 @@ class Neko:
             self.img = self.NEKOS[1]
         elif self.animation_time < 5 * self.SPRITE_LEN:
             self.animation_time = 0
+            self.img = self.NEKOS[0]
 
         self.animation_time += 1
 
